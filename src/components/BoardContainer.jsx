@@ -3,9 +3,9 @@ import QuestionCard from "../assets/question.png";
 import { useEffect, useState } from "react";
 
 const BoardContainer = ({ setCount }) => {
-    // const rows = 4;
+    const rows = 4;
     function shuffle(arr) {
-        let array = arr;
+        let array = arr.slice();
         let currentIndex = array.length;
 
         while (currentIndex != 0) {
@@ -31,28 +31,51 @@ const BoardContainer = ({ setCount }) => {
     ];
     const [randUrl, setRandUrl] = useState([]);
     const [clickCount, setClickCount] = useState(1);
+    const [flippedCards, setFlippedCards] = useState([]);
+    const [matchedCards, setMatchedCards] = useState([]);
 
     useEffect(() => {
         setRandUrl(shuffle([...urls, ...urls]));
     }, []);
 
     const handleClick = (e, id) => {
+        console.log(flippedCards);
+        if (
+            matchedCards.some((item) => item.id === id) ||
+            matchedCards.some((item) => item.id === id)
+        )
+            return;
+
         if (clickCount <= 2) {
             setClickCount((old) => old + 1);
             setCount((old) => old + 1);
             e.target.src = randUrl[id];
+            setFlippedCards((prev) => [...prev, { id, url: randUrl[id] }]);
 
             setTimeout(() => {
+                setFlippedCards(flippedCards.filter((el) => el[0] != id));
                 e.target.src = QuestionCard;
                 setClickCount((old) => old - 1);
-            }, 1500);
-        } else {
-            e.preventDefault();
+            }, 4000);
+        }
+
+        if (flippedCards.length >= 2) {
+            if (flippedCards[0][1] == randUrl[id]) {
+                console.log("found same");
+                e.target.src = randUrl[id];
+                setMatchedCards(
+                    (prev) => [...prev, { id, url: randUrl[id] }],
+                    (prev) => [
+                        ...prev,
+                        { id: flippedCards[0][0], url: flippedCards[0][1] },
+                    ]
+                );
+            }
         }
     };
 
     return (
-        <div className="card-container">
+        <div className="card-container" style={{ "--board-count": rows }}>
             {randUrl.map((url, i) => (
                 <Card
                     key={i}

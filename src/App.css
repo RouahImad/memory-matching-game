@@ -3,11 +3,12 @@
 }
 body {
     user-select: none;
+    background-color: #ede8ee;
 }
 .card-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--board-count), 1fr);
+    grid-template-rows: repeat(var(--board-count), 1fr);
     gap: 10px;
     width: 400px;
     height: 400px;
@@ -29,12 +30,28 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 15px auto 0;
-    width: 350px;
+    background-color: #d3cedc;
+    padding: 15px 20px;
+    margin: 10px auto 0;
+    width: 400px;
 }
 .counter,
 .timer {
     font-weight: bold;
     text-transform: capitalize;
-    font-family: cursive;
+    font-family: sans-serif;
+    background-color: white;
+    color: #928dae;
+    font-size: 14px;
+    padding: 5px;
+}
+
+@media (max-width: 432px) {
+    .card-container {
+        width: 370px;
+        height: 370px;
+    }
+    .infos {
+        width: 370px;
+    }
 }
