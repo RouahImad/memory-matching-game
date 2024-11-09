@@ -5,6 +5,7 @@ import BoardContainer from "./components/BoardContainer";
 function App() {
     const [count, setCount] = useState(0);
     const [timer, setTimer] = useState(0);
+    const [matchedCount, setMatchedCount] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -24,9 +25,13 @@ function App() {
 
     return (
         <div>
-            <BoardContainer setCount={setCount} />
+            <BoardContainer
+                setCount={setCount}
+                setMatchedCount={setMatchedCount}
+            />
             <div className="infos">
-                <span className="counter">flipped {count} times</span>
+                <span className="counter">flips {count}</span>
+                <span className="matched">matched {matchedCount}</span>
                 <span className="timer">{formatTime(timer)}</span>
             </div>
         </div>

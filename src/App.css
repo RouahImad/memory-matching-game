@@ -20,6 +20,11 @@ body {
     align-items: center;
     border: 1px solid black;
     cursor: pointer;
+    transition: 0.3s;
+}
+.card.matched {
+    cursor: not-allowed;
+    box-shadow: 0px 0px 4px 0px #8bc34a;
 }
 .card img {
     width: 100%;
@@ -36,6 +41,7 @@ body {
     width: 400px;
 }
 .counter,
+.matched,
 .timer {
     font-weight: bold;
     text-transform: capitalize;

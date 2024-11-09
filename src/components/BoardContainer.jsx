@@ -2,7 +2,7 @@ import Card from "./card";
 import QuestionCard from "../assets/question.png";
 import { useEffect, useState } from "react";
 
-const BoardContainer = ({ setCount }) => {
+const BoardContainer = ({ setCount, setMatchedCount }) => {
     const rows = 4;
     function shuffle(arr) {
         let array = arr.slice();
@@ -30,49 +30,61 @@ const BoardContainer = ({ setCount }) => {
         "/src/assets/darkRedThing.jpg",
     ];
     const [randUrl, setRandUrl] = useState([]);
-    const [flippedCards, setFlippedCards] = useState([]);
     const [matchedCards, setMatchedCards] = useState([]);
-    const [clickCount, setClickCount] = useState(0);
+    const [firstMatch, setFirstMatch] = useState([]);
+    const [secondMatch, setSecondMatch] = useState([]);
 
     useEffect(() => {
         setRandUrl(shuffle([...urls, ...urls]));
     }, []);
 
     const handleClick = (e, id) => {
-        // console.log(matchedCards);
-        // console.log(matchedCards.some((item) => item.id === id));
-
-        if (clickCount > 2 || matchedCards.some((item) => item.id === id))
+        if (
+            (firstMatch.length && secondMatch.length) ||
+            matchedCards.some((el) => el.id === id)
+        )
             return;
 
         e.target.src = randUrl[id];
-
-        setFlippedCards((prev) => [...prev, { id, url: randUrl[id] }]);
         setCount((old) => old + 1);
-        setClickCount((old) => old + 1);
 
-        let timer = setTimeout(() => {
-            e.target.src = QuestionCard;
-            setFlippedCards(flippedCards.filter((el) => el[0] != id));
-            setClickCount((old) => old - 1);
-        }, 1500);
-
-        if (flippedCards.length >= 2) {
-            console.log(flippedCards[0]);
-
-            if (flippedCards[0].url == randUrl[id]) {
-                clearTimeout(timer);
-                console.log("found same");
-                e.target.src = randUrl[id];
-
-                setMatchedCards((prev) => [...prev, { id, url: randUrl[id] }]);
-                setMatchedCards((prev) => [
-                    ...prev,
-                    { id: flippedCards[0].id, url: flippedCards[0].url },
-                ]);
-            }
+        if (firstMatch.length) {
+            setSecondMatch([{ id, src: randUrl[id], el: e.target }]);
+        } else {
+            setFirstMatch([{ id, src: randUrl[id], el: e.target }]);
         }
     };
+
+    useEffect(() => {
+        let check = false;
+        if (firstMatch.length && secondMatch.length) {
+            if (firstMatch[0].src == secondMatch[0].src) {
+                check = true;
+
+                firstMatch[0].el.src = firstMatch[0].src;
+                secondMatch[0].el.src = secondMatch[0].src;
+
+                firstMatch[0].el.parentElement.classList.add("matched");
+                secondMatch[0].el.parentElement.classList.add("matched");
+
+                setMatchedCards((prev) => [
+                    ...prev,
+                    firstMatch[0],
+                    secondMatch[0],
+                ]);
+                setMatchedCount((old) => old + 1);
+            }
+            let tm = setTimeout(() => {
+                if (!check) {
+                    firstMatch[0].el.src = QuestionCard;
+                    secondMatch[0].el.src = QuestionCard;
+                }
+                setSecondMatch([]);
+                setFirstMatch([]);
+            }, 800);
+            return () => clearTimeout(tm);
+        }
+    }, [firstMatch, secondMatch]);
 
     return (
         <div className="card-container" style={{ "--board-count": rows }}>
