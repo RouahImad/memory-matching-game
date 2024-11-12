@@ -2,8 +2,75 @@
     box-sizing: border-box;
 }
 body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
     user-select: none;
     background-color: #ede8ee;
+    margin: 0;
+    font-family: sans-serif;
+}
+.promptContainer {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+}
+.promptContainer h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #928dae;
+}
+.promptContainer p {
+    color: #928dae;
+}
+.promptContainer button {
+    margin-top: 10px;
+    background-color: #928dae;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    border-radius: 4px;
+    font-weight: bold;
+}
+.promptContainer button:hover {
+    background-color: #7f7f7f;
+}
+.win-container {
+    position: absolute;
+    width: 75vw;
+    height: 50vh;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.win-container h2 {
+    color: #928dae;
+    margin: 0;
+}
+.win-container button {
+    margin-top: 20px;
+    background-color: #928dae;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.win-container button:hover {
+    background-color: #7f7f7f;
 }
 .card-container {
     display: grid;
@@ -26,10 +93,16 @@ body {
     cursor: not-allowed;
     box-shadow: 0px 0px 4px 0px #8bc34a;
 }
+.card.flipped {
+    transform: scale(1.01) rotateY(180deg);
+}
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.card.matched img {
+    object-fit: contain;
 }
 .infos {
     display: flex;
@@ -45,7 +118,6 @@ body {
 .timer {
     font-weight: bold;
     text-transform: capitalize;
-    font-family: sans-serif;
     background-color: white;
     color: #928dae;
     font-size: 14px;

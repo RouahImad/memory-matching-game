@@ -1,23 +1,25 @@
 import Card from "./card";
 import QuestionCard from "../assets/question.png";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const BoardContainer = ({ setCount, setMatchedCount }) => {
-    const rows = 4;
-    function shuffle(arr) {
-        let array = arr.slice();
-        let currentIndex = array.length;
+function shuffle(arr) {
+    let array = arr.slice();
+    let currentIndex = array.length;
 
-        while (currentIndex != 0) {
-            let randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex],
-                array[currentIndex],
-            ];
-        }
-        return array;
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+        ];
     }
+    return array;
+}
+
+const BoardContainer = ({ setCount, setMatchedCount, setMatchedAll }) => {
+    const rows = 4;
 
     const urls = [
         "/src/assets/pumpkin.jpg",
@@ -41,11 +43,14 @@ const BoardContainer = ({ setCount, setMatchedCount }) => {
     const handleClick = (e, id) => {
         if (
             (firstMatch.length && secondMatch.length) ||
+            firstMatch.some((el) => el.id === id) ||
+            secondMatch.some((el) => el.id === id) ||
             matchedCards.some((el) => el.id === id)
         )
             return;
 
         e.target.src = randUrl[id];
+        e.target.parentElement.classList.add("flipped");
         setCount((old) => old + 1);
 
         if (firstMatch.length) {
@@ -72,13 +77,21 @@ const BoardContainer = ({ setCount, setMatchedCount }) => {
                     firstMatch[0],
                     secondMatch[0],
                 ]);
+
                 setMatchedCount((old) => old + 1);
+
+                if (matchedCards.length + 2 === randUrl.length) {
+                    setMatchedAll(true);
+                }
             }
+
             let tm = setTimeout(() => {
                 if (!check) {
                     firstMatch[0].el.src = QuestionCard;
                     secondMatch[0].el.src = QuestionCard;
                 }
+                firstMatch[0].el.parentElement.classList.remove("flipped");
+                secondMatch[0].el.parentElement.classList.remove("flipped");
                 setSecondMatch([]);
                 setFirstMatch([]);
             }, 800);
@@ -98,6 +111,12 @@ const BoardContainer = ({ setCount, setMatchedCount }) => {
             ))}
         </div>
     );
+};
+
+BoardContainer.propTypes = {
+    setCount: PropTypes.func.isRequired,
+    setMatchedCount: PropTypes.func.isRequired,
+    setMatchedAll: PropTypes.func.isRequired,
 };
 
 export default BoardContainer;
