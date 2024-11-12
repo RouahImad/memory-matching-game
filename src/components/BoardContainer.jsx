@@ -2,6 +2,14 @@ import Card from "./Card";
 import QuestionCard from "../assets/question.png";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import pumpkin from "../assets/pumpkin.jpg";
+import greenThing from "../assets/greenThing.jpg";
+import onion from "../assets/onion.jpg";
+import redThing from "../assets/redThing.jpg";
+import letus from "../assets/letus.jpg";
+import purpleThing from "../assets/purpleThing.jpg";
+import tomato from "../assets/tomato.jpg";
+import darkRedThing from "../assets/darkRedThing.jpg";
 
 function shuffle(arr) {
     let array = arr.slice();
@@ -22,15 +30,16 @@ const BoardContainer = ({ setCount, setMatchedCount, setMatchedAll }) => {
     const rows = 4;
 
     const urls = [
-        "/src/assets/pumpkin.jpg",
-        "/src/assets/greenThing.jpg",
-        "/src/assets/onion.jpg",
-        "/src/assets/redThing.jpg",
-        "/src/assets/letus.jpg",
-        "/src/assets/purpleThing.jpg",
-        "/src/assets/tomato.jpg",
-        "/src/assets/darkRedThing.jpg",
+        pumpkin,
+        greenThing,
+        onion,
+        redThing,
+        letus,
+        purpleThing,
+        tomato,
+        darkRedThing,
     ];
+
     const [randUrl, setRandUrl] = useState([]);
     const [matchedCards, setMatchedCards] = useState([]);
     const [firstMatch, setFirstMatch] = useState([]);
