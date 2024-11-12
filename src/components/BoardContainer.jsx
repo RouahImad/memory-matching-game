@@ -1,4 +1,4 @@
-import Card from "./card";
+import Card from "./Card";
 import QuestionCard from "../assets/question.png";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
