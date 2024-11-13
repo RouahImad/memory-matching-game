@@ -12,6 +12,14 @@ function App() {
     const [matchedAll, setMatchedAll] = useState(false);
 
     useEffect(() => {
+        if (localStorage.getItem("firstVisit") === "false") {
+            setClickedContinue(true);
+        } else {
+            localStorage.setItem("firstVisit", "true");
+        }
+    }, []);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             setTimer((prevTimer) => prevTimer + 1);
         }, 1000);

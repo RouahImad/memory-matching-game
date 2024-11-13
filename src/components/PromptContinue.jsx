@@ -8,7 +8,14 @@ const PromptContinue = ({ setClickedContinue }) => {
                 Click on a card to reveal the image. Find the matching card to
                 score a point.
             </p>
-            <button onClick={() => setClickedContinue(true)}>Continue</button>
+            <button
+                onClick={() => {
+                    localStorage.setItem("firstVisit", "false");
+                    setClickedContinue(true);
+                }}
+            >
+                Continue
+            </button>
         </div>
     );
 };

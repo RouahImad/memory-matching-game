@@ -4,9 +4,10 @@ const WinWindow = ({ count, timer }) => {
     return (
         <div className="win-container">
             <h2>You Win!</h2>
-            <p>
-                Won after {count} flip in {timer}
-            </p>
+            <div>
+                <p>(☞ﾟヮﾟ)☞ after {count} flips...</p>
+                <p>(☞ﾟヮﾟ)☞ in {timer}s 🚀.</p>
+            </div>
             <button onClick={() => window.location.reload()}>
                 Do you want to play again?
             </button>
