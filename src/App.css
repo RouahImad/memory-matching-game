@@ -13,10 +13,12 @@ body {
 }
 .promptContainer {
     padding: 20px;
+    margin-inline: 10px;
     background-color: white;
     border-radius: 5px;
 }
 .promptContainer h2 {
+    text-wrap: pretty;
     margin: 0;
     font-size: 20px;
     color: #928dae;
@@ -33,7 +35,6 @@ body {
     padding: 8px 10px;
     cursor: pointer;
     transition: 0.3s;
-
     border-radius: 4px;
     font-weight: bold;
 }
@@ -56,19 +57,30 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+@media (min-width: 890px) {
+    .win-container {
+        width: 55vw;
+    }
+}
 .win-container h2 {
     color: #928dae;
     margin: 0;
 }
-.win-container > div {
+.win-container .message {
     padding-left: 20px;
     margin-top: 10px;
 }
 .win-container p {
     margin: 10px 0;
 }
-.win-container button {
+.win-container .tryAgain {
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.win-container button {
     background-color: #928dae;
     color: white;
     border: none;
@@ -79,6 +91,7 @@ body {
 }
 .win-container button:hover {
     background-color: #84bc44;
+    transform: scale(1.08) rotate(2deg);
 }
 .card-container {
     display: grid;
@@ -88,6 +101,19 @@ body {
     width: 400px;
     height: 400px;
     margin: auto;
+}
+@media (max-width: 432px) {
+    .win-container {
+        width: 80vw;
+        height: 35vh;
+    }
+    .card-container {
+        width: 370px;
+        height: 370px;
+    }
+    .infos {
+        width: 370px;
+    }
 }
 .card {
     display: flex;
@@ -130,14 +156,4 @@ body {
     color: #928dae;
     font-size: 14px;
     padding: 5px;
-}
-
-@media (max-width: 432px) {
-    .card-container {
-        width: 370px;
-        height: 370px;
-    }
-    .infos {
-        width: 370px;
-    }
 }

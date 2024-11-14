@@ -4,13 +4,16 @@ const WinWindow = ({ count, timer }) => {
     return (
         <div className="win-container">
             <h2>You Win!</h2>
-            <div>
+            <div className="message">
                 <p>(☞ﾟヮﾟ)☞ after {count} flips...</p>
                 <p>(☞ﾟヮﾟ)☞ in {timer}s 🚀.</p>
             </div>
-            <button onClick={() => window.location.reload()}>
-                Do you want to play again?
-            </button>
+            <div className="tryAgain">
+                Do you want to
+                <button onClick={() => window.location.reload()}>
+                    play again?
+                </button>
+            </div>
         </div>
     );
 };
