@@ -6,7 +6,7 @@ const Card = ({ url, dataId, handleClick }) => {
                 src={url}
                 draggable="false"
                 alt={`Card ${dataId}`}
-                loading="lazy"
+                loading="eager"
                 onClick={(e) => handleClick(e, dataId)}
             />
         </div>
